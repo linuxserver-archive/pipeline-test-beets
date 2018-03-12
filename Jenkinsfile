@@ -103,7 +103,7 @@ pipeline {
         script{
           env.PACKAGE_TAG = sh(
             script: '''docker run --rm alpine:${DIST_TAG} sh -c 'apk update --quiet\
-                       && apk info '${DIST_PACKAGES}' | md5sum | cut -c1-8' ''',
+                       && apk info '"${DIST_PACKAGES}"' | md5sum | cut -c1-8' ''',
             returnStdout: true).trim()
         }
       }
@@ -123,7 +123,7 @@ pipeline {
           env.PACKAGE_TAG = sh(
             script: '''docker run --rm ubuntu:${DIST_TAG} sh -c\
                        'apt-get --allow-unauthenticated update -qq >/dev/null 2>&1 &&\
-                        apt-cache --no-all-versions show '${DIST_PACKAGES}' | md5sum | cut -c1-8' ''',
+                        apt-cache --no-all-versions show '"${DIST_PACKAGES}"' | md5sum | cut -c1-8' ''',
             returnStdout: true).trim()
         }
       }
